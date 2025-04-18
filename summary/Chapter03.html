@@ -53,6 +53,15 @@
             margin-bottom: 30px;
         }
 
+        pre {
+            background-color: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            line-height: 1.5;
+        }
+
         footer {
             background-color: #2c3e50;
             color: white;
@@ -89,6 +98,9 @@
     <div class="section">
         <h2>/etc/passwd</h2>
         <p>The system file that stores user account information</p>
+        <pre>
+$ head -1 /etc/passwd
+root:x:0:1:Super-User:/:/bin/csh</pre>
         <table>
             <thead>
             <tr><th>Field</th><th>Description</th></tr>
@@ -108,6 +120,9 @@
     <div class="section">
         <h2>/etc/group</h2>
         <p>Stores group information for all system groups</p>
+        <pre>
+$ cat etc/group
+bin::2:root,bin,daemon,khlee</pre>
         <table>
             <thead>
             <tr><th>Field</th><th>Description</th></tr>
@@ -124,6 +139,17 @@
     <div class="section">
         <h2>/etc/shadow</h2>
         <p>Stores encrypted passwords and password aging information</p>
+        <pre>
+$ ls -l /etc/shadow
+-r-------- 1 root sys 5350
+$ su
+password:
+# cat /etc/shadow
+root:62rmkjdR3h5Pk:11944::::::
+listen:*LK*:::::::
+nobody:NP:6445::::::
+unix306:uAJSB7ZC0suPM:16503::::::
+unix307::16503::::::</pre>
         <table>
             <thead>
             <tr><th>Field</th><th>Description</th></tr>
@@ -185,7 +211,7 @@
 </div>
 
 <footer>
-    <p>&copy; 2025 Unix 서버 수업 | 20101197 권현욱</p>
+    <p>&copy; 2025 Unix System | 20101197 Kwon Hyun Uk</p>
 </footer>
 </body>
 

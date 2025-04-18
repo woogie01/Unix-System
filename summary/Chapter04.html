@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter04 - File System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0 0 120px 0;
+            color: #333;
+        }
+
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #2c3e50;
+            margin-top: 40px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background-color: #ecf0f1;
+        }
+
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
+</head>
+
+<body>
+<header>
+    <h1>Chapter 04</h1>
+    <p>File System</p>
+</header>
+
+<div class="container">
+    <h2>Root Directory</h2>
+    <table>
+        <thead><tr><th>Path</th><th>Description</th></tr></thead>
+        <tbody>
+        <tr><td>/</td><td>Root of the entire filesystem hierarchy</td></tr>
+        <tr><td>/devices</td><td>Physical device files (system-dependent)</td></tr>
+        <tr><td>/dev</td><td>Logical device files (e.g., /dev/sda, /dev/null, /dev/tty)</td></tr>
+        <tr><td>/etc</td><td>System configuration files (host-specific)</td></tr>
+        <tr><td>/mnt</td><td>Mount point for temporary filesystems</td></tr>
+        <tr><td>/opt</td><td>Optional application packages (external software)</td></tr>
+        <tr><td>/proc</td><td>Virtual filesystem exposing kernel/process info</td></tr>
+        <tr><td>/tmp</td><td>Temporary files (cleared on reboot)</td></tr>
+        <tr><td>/bin</td><td>Essential command binaries (like ls, cp)</td></tr>
+        <tr><td>/sbin</td><td>System binaries for administration (e.g., reboot, ifconfig)</td></tr>
+        <tr><td>/usr</td><td>User-related programs, libraries, shared resources</td></tr>
+        <tr><td>/lib</td><td>Shared libraries needed by binaries</td></tr>
+        <tr><td>/var</td><td>Variable files: logs, mail, temp data</td></tr>
+        <tr><td>/home</td><td>Users' home directories</td></tr>
+        <tr><td>/export</td><td>Remote/NFS-mounted filesystems</td></tr>
+        </tbody>
+    </table>
+
+    <h2>Navigating File System</h2>
+    <table>
+        <thead><tr><th>Command</th><th>Purpose</th></tr></thead>
+        <tbody>
+        <tr><td>echo hi > hi.txt</td><td>Writes "hi" into hi.txt</td></tr>
+        <tr><td>ls</td><td>List files in current directory</td></tr>
+        <tr><td>cat hi.txt</td><td>Display contents of hi.txt</td></tr>
+        <tr><td>more /etc/passwd</td><td>View file one screen at a time</td></tr>
+        <tr><td>less /etc/group</td><td>Scrollable viewer for /etc/group</td></tr>
+        <tr><td>head -5 /etc/hosts</td><td>Show first 5 lines of /etc/hosts</td></tr>
+        <tr><td>tail -f /var/log/syslog</td><td>Monitor syslog in real time</td></tr>
+        <tr><td>pg /etc/profile</td><td>Paged viewer for profile</td></tr>
+        <tr><td>cd /usr/bin</td><td>Change to /usr/bin</td></tr>
+        <tr><td>pwd</td><td>Print working directory</td></tr>
+        </tbody>
+    </table>
+
+    <h2>Create File</h2>
+    <table>
+        <thead><tr><th>Command</th><th>Purpose</th></tr></thead>
+        <tbody>
+        <tr><td>cp hi.txt hi2.txt</td><td>Copy file</td></tr>
+        <tr><td>mv hi2.txt hi3.txt</td><td>Rename file</td></tr>
+        <tr><td>rm hi3.txt</td><td>Delete file</td></tr>
+        <tr><td>touch a.txt</td><td>Create or update file</td></tr>
+        <tr><td>mkdir dir1</td><td>Create new directory</td></tr>
+        <tr><td>mv dir1 dir2</td><td>Rename directory</td></tr>
+        <tr><td>rmdir dir2</td><td>Remove empty directory</td></tr>
+        <tr><td>whereis echo</td><td>Locate binary/man page of echo</td></tr>
+        <tr><td>which echo</td><td>Show path used in shell</td></tr>
+        </tbody>
+    </table>
+
+    <h2>Create Text File</h2>
+    <table>
+        <thead><tr><th>Command</th><th>Purpose</th></tr></thead>
+        <tbody>
+        <tr><td>echo hi > hi.txt</td><td>Create and write "hi"</td></tr>
+        <tr><td>echo hello >> hi.txt</td><td>Append "hello"</td></tr>
+        <tr><td>cp hi.txt hello.txt</td><td>Copy to hello.txt</td></tr>
+        <tr><td>cat > aa.txt</td><td>Write to file until Ctrl+D</td></tr>
+        <tr><td>cat aa.txt</td><td>Display content</td></tr>
+        <tr><td>head -5 /etc/passwd > pass.txt</td><td>Save first 5 lines</td></tr>
+        </tbody>
+    </table>
+
+    <h2>touch</h2>
+    <table>
+        <thead><tr><th>Command</th><th>Description</th></tr></thead>
+        <tbody>
+        <tr><td>touch aa.txt</td><td>Create empty file if not exists</td></tr>
+        <tr><td>touch h.txt</td><td>Update modified time if exists</td></tr>
+        </tbody>
+    </table>
+
+    <h2>cp</h2>
+    <table>
+        <thead><tr><th>Command</th><th>Description</th></tr></thead>
+        <tbody>
+        <tr><td>cp hi.txt hi2.txt</td><td>Copy file</td></tr>
+        <tr><td>cp hi.txt dir1</td><td>Copy file to directory</td></tr>
+        <tr><td>cp hi.txt dir1/hi3.txt</td><td>Copy as renamed file</td></tr>
+        </tbody>
+    </table>
+
+    <h2>mv</h2>
+    <table>
+        <thead><tr><th>Command</th><th>Description</th></tr></thead>
+        <tbody>
+        <tr><td>mv hi.txt hi2.txt</td><td>Rename file</td></tr>
+        <tr><td>mv hi.txt dir1</td><td>Move file into directory</td></tr>
+        <tr><td>mv hi.txt dir1/hi2.txt</td><td>Move and rename file</td></tr>
+        <tr><td>mv dir1 dir2</td><td>Rename directory</td></tr>
+        </tbody>
+    </table>
+
+    <h2>rm</h2>
+    <table>
+        <thead><tr><th>Command</th><th>Description</th></tr></thead>
+        <tbody>
+        <tr><td>rm h*.txt</td><td>Remove .txt files starting with h</td></tr>
+        <tr><td>rm dir1/*.txt</td><td>Remove .txt files in dir1</td></tr>
+        <tr><td>rm -rf dir1</td><td>Recursively delete dir1 and contents</td></tr>
+        </tbody>
+    </table>
+
+    <h2>File Type</h2>
+    <table>
+        <thead><tr><th>Symbol</th><th>Meaning</th></tr></thead>
+        <tbody>
+        <tr><td>d</td><td>Directory</td></tr>
+        <tr><td>b</td><td>Block special file (e.g., hard disk)</td></tr>
+        <tr><td>c</td><td>Character special file (e.g., keyboard, serial port)</td></tr>
+        <tr><td>l</td><td>Symbolic link (like a shortcut)</td></tr>
+        <tr><td>p</td><td>FIFO special file (named pipe)</td></tr>
+        <tr><td>s</td><td>Socket file (used for IPC/network communication)</td></tr>
+        <tr><td>-</td><td>Regular file</td></tr>
+        <tr><td>$ file hi.txt</td><td>hi.txt : ASCII Text</td></tr>
+        </tbody>
+    </table>
+
+    <h2>Permission</h2>
+    <table>
+        <thead><tr><th>Type</th><th>Meaning</th></tr></thead>
+        <tbody>
+        <tr><td>r</td><td>Read — view file or list directory contents</td></tr>
+        <tr><td>w</td><td>Write — edit file or add/remove from directory</td></tr>
+        <tr><td>x</td><td>Execute — run file or cd into directory</td></tr>
+        </tbody>
+    </table>
+
+    <h2>Link Number</h2>
+    <table>
+        <thead><tr><th>Type</th><th>Details</th></tr></thead>
+        <tbody>
+        <tr>
+            <td>Hard link</td>
+            <td>
+                <code>$ ln hi.txt hi2.txt</code><br>
+                - hi2.txt shares the same inode with hi.txt<br>
+                - Link count increases<br>
+                - Both point to the same data block<br>
+                - File survives even if one name is deleted
+            </td>
+        </tr>
+        <tr>
+            <td>Soft link (Symbolic link)</td>
+            <td>
+                <code>$ ln -s hi.txt hi2.txt</code><br>
+                - hi2.txt is a shortcut to hi.txt<br>
+                - Different inode and data block<br>
+                - If the original file is deleted, the link is broken (dangling)<br>
+                - Useful for linking directories or across file systems
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h2>Content vs Information</h2>
+    <table>
+        <thead><tr><th>Aspect</th><th>Stored In</th><th>Command</th></tr></thead>
+        <tbody>
+        <tr><td>File Content</td><td>Data blocks</td><td>cat, more, less, pg, head, tail</td></tr>
+        <tr><td>File Information</td><td>i-node</td><td>ls -l</td></tr>
+        <tr><td>Directory Content</td><td>Data blocks</td><td>ls -i</td></tr>
+        <tr><td>Directory Information</td><td>i-node</td><td>ls -ld</td></tr>
+        <tr><td>Example</td><td colspan="2">
+            $ echo 123456 &gt; 123.txt<br>
+            $ cat 123.txt     # Output: 123456<br>
+            $ od -x 123.txt   # View in hex<br>
+            $ od -c 123.txt   # View in ASCII characters
+        </td></tr>
+        </tbody>
+    </table>
+
+    <h2>Comparison: cp vs. ln</h2>
+    <table>
+        <thead><tr><th>Feature</th><th>cp</th><th>ln (hard link)</th></tr></thead>
+        <tbody>
+        <tr><td>Inode</td><td>New inode</td><td>Same inode</td></tr>
+        <tr><td>Data block</td><td>Duplicated</td><td>Shared</td></tr>
+        <tr><td>Delete safe</td><td>Yes</td><td>Yes, unless all links removed</td></tr>
+        </tbody>
+    </table>
+
+    <h2>find</h2>
+    <table>
+        <thead><tr><th>Command</th><th>Description</th></tr></thead>
+        <tbody>
+        <tr><td>find /export/home -name 'hi.txt'</td><td>Find hi.txt under /export/home</td></tr>
+        <tr><td>find / -name core 2> /dev/null</td><td>Find files named core, suppress errors</td></tr>
+        <tr><td>find / -name core > out.txt 2> /dev/null</td><td>Save output, suppress errors</td></tr>
+        <tr><td>find / -name "h*.txt" -exec cat {} \;</td><td>Execute cat on each match</td></tr>
+        <tr><td>find / -name "h*.txt" -ok cat {} \;</td><td>Prompt before executing cat</td></tr>
+        </tbody>
+    </table>
+
+    <h2>Symbols in "find"</h2>
+    <table>
+        <thead><tr><th>Symbol</th><th>Meaning</th></tr></thead>
+        <tbody>
+        <tr><td>{}</td><td>Placeholder for current file</td></tr>
+        <tr><td>\;</td><td>End of exec/ok (escaped)</td></tr>
+        <tr><td>2></td><td>Redirect stderr</td></tr>
+        <tr><td>></td><td>Redirect stdout</td></tr>
+        <tr><td>>></td><td>Append stdout</td></tr>
+        <tr><td>/dev/null</td><td>Null device (discard output)</td></tr>
+        <tr><td>-exec</td><td>Execute command on match</td></tr>
+        <tr><td>-ok</td><td>Prompt then execute</td></tr>
+        </tbody>
+    </table>
+
+    <h2>chmod (symbolic)</h2>
+    <table>
+        <thead><tr><th>Element</th><th>Meaning</th></tr></thead>
+        <tbody>
+        <tr><td>u</td><td>User</td></tr>
+        <tr><td>g</td><td>Group</td></tr>
+        <tr><td>o</td><td>Others</td></tr>
+        <tr><td>a</td><td>All (u+g+o)</td></tr>
+        <tr><td>+</td><td>Add permission</td></tr>
+        <tr><td>-</td><td>Remove permission</td></tr>
+        <tr><td>=</td><td>Set exact permission</td></tr>
+        <tr><td>r/w/x/-</td><td>Permission types</td></tr>
+        </tbody>
+    </table>
+
+    <h2>chmod symbolic example</h2>
+    <table>
+        <thead><tr><th>Command</th><th>Description</th></tr></thead>
+        <tbody>
+        <tr><td>$ chmod u+w,g-w,o=r-- hi.txt</td><td>Grant write to user, remove write from group, set read-only for others</td></tr>
+        </tbody>
+    </table>
+
+    <h2>chmod (numeric)</h2>
+    <table>
+        <thead><tr><th>Number</th><th>Permission</th></tr></thead>
+        <tbody>
+        <tr><td>4</td><td>read (r)</td></tr>
+        <tr><td>2</td><td>write (w)</td></tr>
+        <tr><td>1</td><td>execute (x)</td></tr>
+        <tr><td>0</td><td>none (-)</td></tr>
+        </tbody>
+    </table>
+
+    <h2>umask Calculation Details</h2>
+    <table>
+        <thead><tr><th>Step</th><th>Explanation</th></tr></thead>
+        <tbody>
+        <tr><td>1</td><td>Directory default permission: 777</td></tr>
+        <tr><td>2</td><td>File default permission: 666 (no execute by default)</td></tr>
+        <tr><td>3</td><td>Subtract umask (e.g., 022)</td></tr>
+        <tr><td>4</td><td>Result for file: 666 - 022 = 644 (rw-r--r--)</td></tr>
+        <tr><td>5</td><td>Result for directory: 777 - 022 = 755 (rwxr-xr-x)</td></tr>
+        <tr><td>Note</td><td>Execute bit is not granted for files by default</td></tr>
+        </tbody>
+    </table>
+
+    <h2>umask & Default Permission</h2>
+    <table>
+        <thead><tr><th>Item</th><th>Description</th></tr></thead>
+        <tbody>
+        <tr><td>Default file</td><td>666</td></tr>
+        <tr><td>Default directory</td><td>777</td></tr>
+        <tr><td>umask 022</td><td>Results in file 644, dir 755</td></tr>
+        <tr><td>Final file permission</td><td>666 - umask</td></tr>
+        <tr><td>Final dir permission</td><td>777 - umask</td></tr>
+        <tr><td>Remove x from file if present</td><td>Default behavior</td></tr>
+        </tbody>
+    </table>
+
+    <h2>File System Management</h2>
+    <table>
+        <thead><tr><th>Command</th><th>Description</th></tr></thead>
+        <tbody>
+        <tr><td>df</td><td>Show disk free space</td></tr>
+        <tr><td>df -k</td><td>Show in kilobytes</td></tr>
+        <tr><td>du</td><td>Show disk usage</td></tr>
+        <tr><td>du -sk *</td><td>Summary usage per directory</td></tr>
+        <tr><td>mount</td><td>Show mounted file systems</td></tr>
+        <tr><td>mount -t iso9660 /dev/cdrom /mnt/cdrom</td><td>Mount CD-ROM</td></tr>
+        <tr><td>mountall</td><td>Mount all from /etc/vfstab</td></tr>
+        <tr><td>umount /mnt/cdrom</td><td>Unmount CD-ROM</td></tr>
+        <tr><td>umountall</td><td>Unmount all except / and core</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<footer>
+    <p>&copy; 2025 Unix System | 20101197 Kwon Hyun Uk</p>
+</footer>
+</body>
+</html>
