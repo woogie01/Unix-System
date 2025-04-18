@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chapter01_02 - Introduction to Unix</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding-bottom: 100px;
+            color: #333;
+        }
+
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #2c3e50;
+        }
+
+        pre {
+            background-color: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            line-height: 1.5;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #ecf0f1;
+        }
+
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+
+<body>
+<header>
+    <h1>Chapter 01 - 02</h1>
+    <p>Introduction to Unix</p>
+</header>
+
+<div class="container">
+
+    <div class="section">
+        <h2>Network Commands</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Command</th>
+                <th>Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>ipconfig</td>
+                <td>Displays the network configuration of the computer (Windows only)</td>
+            </tr>
+            <tr>
+                <td>ping 10.10.54.75</td>
+                <td>Sends test packets to a server to check if it’s alive</td>
+            </tr>
+            <tr>
+                <td>telnet 10.10.54.75</td>
+                <td>Connects to a remote server for terminal access</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+    <div class="section">
+        <h2>Unix Command Syntax</h2>
+        <pre>
+$ command [option] [arguments]
+$ ls –sCF /usr/bin</pre>
+        <table>
+            <thead>
+            <tr>
+                <th>Element</th>
+                <th>Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr><td>$</td><td>Prompt symbol</td></tr>
+            <tr><td>ls</td><td>Command</td></tr>
+            <tr><td>-sCF</td><td>Options (equivalent to -s -C -F)</td></tr>
+            <tr><td>/usr/bin</td><td>Argument (target directory)</td></tr>
+            <tr><td>[ ... ]</td><td>Optional part</td></tr>
+            </tbody>
+        </table>
+        <p><strong>Usage:</strong> <code>$ man ls</code> - Shows the manual documentation for the <code>ls</code> command.</p>
+    </div>
+
+    <div class="section">
+        <h2>Basic Commands</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Command</th>
+                <th>Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr><td>uname -a</td><td>Shows system info (OS, kernel, host)</td></tr>
+            <tr><td>date</td><td>Prints current date and time</td></tr>
+            <tr><td>id</td><td>Displays user ID, group ID, and groups</td></tr>
+            <tr><td>groups</td><td>Lists groups the user belongs to</td></tr>
+            <tr><td>who</td><td>Shows logged-in users</td></tr>
+            <tr><td>who \| grep unix203</td><td>Filters for user unix203 in who output</td></tr>
+            <tr><td>finger [id]</td><td>Displays detailed user info (real name, login time, etc.)</td></tr>
+            <tr><td>w</td><td>Shows users and their current activity (processes)</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="section">
+        <h2>Terminal Setting</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Command</th>
+                <th>Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr><td>tty</td><td>Shows your current terminal device (e.g., /dev/pts/1)</td></tr>
+            <tr><td>stty -a</td><td>Displays current terminal settings (like erase, intr)</td></tr>
+            <tr><td>stty erase [key]</td><td>Sets backspace/delete key (e.g., ^H or ^?)</td></tr>
+            <tr><td>echo hello | write unix203 pts/34</td><td>Sends "hello" to user unix203 on terminal pts/34</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2025 Unix 서버 수업 | 20101197 권현욱</p>
+</footer>
+</body>
+
+</html>
