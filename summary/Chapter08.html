@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter08 - Regular Expressions & Unix Tools</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0 0 120px 0;
+            color: #333;
+        }
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2, h3 {
+            color: #2c3e50;
+            margin-top: 40px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+            vertical-align: top;
+        }
+        th {
+            background-color: #ecf0f1;
+        }
+        pre {
+            background: #f0f0f0;
+            padding: 10px;
+            overflow-x: auto;
+        }
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
+</head>
+
+<body>
+<header>
+    <h1>Chapter 08</h1>
+    <p>Regular Expressions & Unix Utilities</p>
+</header>
+
+<div class="container">
+    <h2>Regular Expression</h2>
+    <p>Regular expressions represent patterns of text using metacharacters.</p>
+
+    <h2>Meta Characters</h2>
+    <table>
+        <thead><tr><th>Meta Character</th><th>Description</th></tr></thead>
+        <tbody>
+        <tr><td>.</td><td>Matches any single character</td></tr>
+        <tr><td>[]</td><td>Matches any one of the characters inside the brackets</td></tr>
+        <tr><td>*</td><td>Matches zero or more occurrences of the previous character</td></tr>
+        <tr><td>[^...]</td><td>Matches any character not listed inside brackets</td></tr>
+        <tr><td>^</td><td>Matches the beginning of the line</td></tr>
+        <tr><td>$</td><td>Matches the end of the line</td></tr>
+        <tr><td>\</td><td>Escapes a meta character</td></tr>
+        <tr><td>?</td><td>Matches zero or one of the preceding character</td></tr>
+        <tr><td>[a-z]</td><td>Matches lowercase a to z</td></tr>
+        <tr><td>^.*</td><td>Matches from start with any characters</td></tr>
+        <tr><td>^.*[\[\]]</td><td>Matches any line starting with any chars and containing [ or ]</td></tr>
+        </tbody>
+    </table>
+
+    <h2>U.S. Telephone Number Pattern</h2>
+    <pre>
+[0-9][0-9][0-9]\.[0-9][0-9][0-9]\.[0-9][0-9][0-9][0-9]</pre>
+    <p>This pattern matches: 123.456.7890</p>
+
+    <h2>FTP Command Flow</h2>
+    <pre>
+ftp 10.10.54.75
+cd public_html
+dir
+asc
+put a.html
+get b.html
+mput *.html
+bi
+put my.jpg
+quit</pre>
+
+    <h2>grep</h2>
+    <pre>
+grep unix30 /etc/passwd
+grep -v unix30 /etc/passwd
+grep -i unix30 /etc/passwd
+cat /etc/passwd | grep unix30</pre>
+
+    <h2>find</h2>
+    <pre>
+find / -name core
+find /export -user unix300
+find /export -size +2000k
+find / -perm -4000
+find / -name core 2> /dev/null</pre>
+
+    <h2>sort</h2>
+    <pre>
+sort -t: +1 /etc/group
+head /etc/passwd | sort -r > pass.txt
+# Options: -f (ignore case), -r (reverse), -t (delimiter), -o (output file)</pre>
+
+    <h2>tee vs script</h2>
+    <table>
+        <thead><tr><th>Feature</th><th>tee</th><th>script</th></tr></thead>
+        <tbody>
+        <tr><td>Purpose</td><td>Split output to screen and file</td><td>Record full terminal session</td></tr>
+        <tr><td>What it records</td><td>Only output</td><td>Everything (commands + outputs)</td></tr>
+        <tr><td>Interactivity</td><td>Not interactive</td><td>Fully interactive</td></tr>
+        <tr><td>Example</td><td>ps -ef | tee ps.txt</td><td>script session.txt</td></tr>
+        <tr><td>Exit method</td><td>Command finishes</td><td>Type exit</td></tr>
+        <tr><td>Use case</td><td>Log a single command</td><td>Log entire session</td></tr>
+        </tbody>
+    </table>
+
+    <h3>Examples</h3>
+    <pre>
+ps -ef | tee processes.txt
+script terminal_log.txt
+ls
+whoami
+exit</pre>
+
+    <h2>Unix Utilities - Summary</h2>
+    <table>
+        <thead><tr><th>Command</th><th>Description</th></tr></thead>
+        <tbody>
+        <tr><td>wc</td><td>Count lines, words, characters</td></tr>
+        <tr><td>cut</td><td>Extract fields from text</td></tr>
+        <tr><td>paste</td><td>Merge lines horizontally</td></tr>
+        <tr><td>tr</td><td>Translate/delete characters</td></tr>
+        <tr><td>split</td><td>Split file into pieces</td></tr>
+        <tr><td>uniq</td><td>Remove duplicate lines</td></tr>
+        <tr><td>cmp</td><td>Compare byte-by-byte</td></tr>
+        <tr><td>comm</td><td>Compare sorted files line-by-line</td></tr>
+        <tr><td>diff</td><td>Show line-by-line differences</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<footer>
+    <p>&copy; 2025 Unix System | 20101197 Kwon Hyun Uk</p>
+</footer>
+</body>
+</html>
