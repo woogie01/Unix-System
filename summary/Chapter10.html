@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter10 - Process and Job Control</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0 0 120px 0;
+            color: #333;
+        }
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2, h3 {
+            color: #2c3e50;
+            margin-top: 40px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+            vertical-align: top;
+        }
+        th {
+            background-color: #ecf0f1;
+        }
+        pre {
+            background-color: #f0f0f0;
+            padding: 10px;
+            overflow-x: auto;
+        }
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
+</head>
+
+<body>
+<header>
+    <h1>Chapter 10</h1>
+    <p>Process and Job Control</p>
+</header>
+
+<div class="container">
+    <h2>Process - Summary</h2>
+    <table>
+        <thead><tr><th>Term</th><th>Description</th></tr></thead>
+        <tbody>
+        <tr><td>Process</td><td>A running instance of a program</td></tr>
+        <tr><td>PID</td><td>Process ID (1 to 32768)</td></tr>
+        <tr><td>PPID</td><td>Parent Process ID</td></tr>
+        <tr><td>PID 0</td><td>Scheduler daemon (kernel)</td></tr>
+        <tr><td>PID 1</td><td>Init process (ancestor of all)</td></tr>
+        </tbody>
+    </table>
+
+    <h3>Useful Commands</h3>
+    <pre>
+ps -l
+ps -ef
+echo $$</pre>
+
+    <h2>Shell Scripts - Summary</h2>
+    <ul>
+        <li><code>#</code> : Comment</li>
+        <li><code>#!</code> : Interpreter declaration</li>
+    </ul>
+    <h3>Script : my.sh</h3>
+    <pre>
+#!/bin/cat
+Hello World</pre>
+    <h3>Execute : my.sh</h3>
+    <pre>
+$ chmod u+x my.sh
+$ ./my.sh</pre>
+
+    <h2>Stopping Processes</h2>
+    <table>
+        <thead><tr><th>Command</th><th>Description</th></tr></thead>
+        <tbody>
+        <tr><td>Ctrl + C</td><td>Stop foreground process</td></tr>
+        <tr><td>kill</td><td>Send signal to process</td></tr>
+        <tr><td>kill -l</td><td>List signal names</td></tr>
+        <tr><td>kill -9 PID</td><td>Force kill (SIGKILL)</td></tr>
+        <tr><td>pkill program_name</td><td>Kill process by name</td></tr>
+        </tbody>
+    </table>
+
+    <h2>Proc File System</h2>
+    <p>A virtual filesystem containing runtime system info.</p>
+    <pre>
+ls -l /proc/$$
+ls -l /proc/1</pre>
+
+    <h2>Job Control</h2>
+    <table>
+        <thead><tr><th>Term</th><th>Description</th></tr></thead>
+        <tbody>
+        <tr><td>Foreground</td><td>Grabs terminal; blocks user</td></tr>
+        <tr><td>Background</td><td>Runs in background; frees terminal</td></tr>
+        </tbody>
+    </table>
+    <pre>
+To run in background: <code>sleep 60 &</code>
+Commands: <code>jobs</code>, <code>ps</code></pre>
+
+    <h2>CSH Job Control Flow</h2>
+    <table>
+        <thead><tr><th>State</th><th>Key/Command</th><th>Action</th></tr></thead>
+        <tbody>
+        <tr><td>Start</td><td>% cmd</td><td>Run in foreground</td></tr>
+        <tr><td>Start</td><td>% cmd &</td><td>Run in background</td></tr>
+        <tr><td>Foreground</td><td>Ctrl + Z</td><td>Stop</td></tr>
+        <tr><td>Foreground</td><td>Ctrl + C</td><td>Kill</td></tr>
+        <tr><td>Foreground</td><td>%kill</td><td>Kill</td></tr>
+        <tr><td>Stopped</td><td>%fg</td><td>Bring to foreground</td></tr>
+        <tr><td>Stopped</td><td>%bg</td><td>Continue in background</td></tr>
+        <tr><td>Stopped</td><td>%kill</td><td>Kill</td></tr>
+        <tr><td>Background</td><td>%fg</td><td>Bring to foreground</td></tr>
+        <tr><td>Background</td><td>%kill</td><td>Kill</td></tr>
+        <tr><td>Background</td><td>%stop</td><td>Stop</td></tr>
+        <tr><td>Killed</td><td>-</td><td>Terminated</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<footer>
+    <p>&copy; 2025 Unix System | 20101197 Kwon Hyun Uk</p>
+</footer>
+</body>
+</html>
