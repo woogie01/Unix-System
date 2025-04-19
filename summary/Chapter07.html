@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter07 - Vi</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0 0 120px 0;
+            color: #333;
+        }
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2, h3 {
+            color: #2c3e50;
+            margin-top: 40px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+            vertical-align: top;
+        }
+        th {
+            background-color: #ecf0f1;
+        }
+        pre {
+            background: #f8f8f8;
+            padding: 10px;
+            border-left: 4px solid #ccc;
+            overflow-x: auto;
+        }
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
+</head>
+
+<body>
+<header>
+    <h1>Chapter 07</h1>
+    <p>Vi</p>
+</header>
+
+<div class="container">
+    <h2>Moving within a File</h2>
+    <table>
+        <thead><tr><th>Key</th><th>Description</th></tr></thead>
+        <tbody>
+        <tr><td>h</td><td>Move left</td></tr>
+        <tr><td>j</td><td>Move down</td></tr>
+        <tr><td>k</td><td>Move up</td></tr>
+        <tr><td>l</td><td>Move right</td></tr>
+        <tr><td>0 or ^</td><td>Move to the beginning of the line</td></tr>
+        <tr><td>$</td><td>Move to the end of the line</td></tr>
+        <tr><td>Enter</td><td>Move to the next line</td></tr>
+        <tr><td>Ctrl + f</td><td>Move forward one full page</td></tr>
+        <tr><td>Ctrl + b</td><td>Move backward one full page</td></tr>
+        <tr><td>Ctrl + d</td><td>Move down half a page</td></tr>
+        <tr><td>Ctrl + u</td><td>Move up half a page</td></tr>
+        <tr><td>:0, :1</td><td>Go to the first line</td></tr>
+        <tr><td>:$</td><td>Go to the last line</td></tr>
+        <tr><td>:100</td><td>Go to the 100th line</td></tr>
+        <tr><td>Ctrl + %</td><td>Jump to matching { or }</td></tr>
+        </tbody>
+    </table>
+
+    <h2>Searching in vi or vim</h2>
+    <table>
+        <thead><tr><th>Command</th><th>Description</th></tr></thead>
+        <tbody>
+        <tr><td>/string</td><td>Search forward</td></tr>
+        <tr><td>?string</td><td>Search backward</td></tr>
+        <tr><td>n</td><td>Next match in same direction</td></tr>
+        <tr><td>N</td><td>Previous match (reverse direction)</td></tr>
+        </tbody>
+    </table>
+
+    <h2>Exit and Save</h2>
+    <table>
+        <thead><tr><th>Command</th><th>Description</th></tr></thead>
+        <tbody>
+        <tr><td>:q</td><td>Quit (ask to save if modified)</td></tr>
+        <tr><td>:q!</td><td>Force quit without saving</td></tr>
+        <tr><td>:w</td><td>Write current file</td></tr>
+        <tr><td>:w!</td><td>Force write</td></tr>
+        <tr><td>:wq</td><td>Write and quit</td></tr>
+        <tr><td>:wq!</td><td>Overwrite and quit</td></tr>
+        <tr><td>ZZ</td><td>Save and exit (if modified)</td></tr>
+        <tr><td>:x</td><td>Save and exit (like :wq)</td></tr>
+        <tr><td>:w filename</td><td>Save to another file</td></tr>
+        <tr><td>:r filename</td><td>Insert contents of file</td></tr>
+        </tbody>
+    </table>
+
+    <h2>Insert Mode (vim)</h2>
+    <table>
+        <thead><tr><th>Command</th><th>Description</th></tr></thead>
+        <tbody>
+        <tr><td>i</td><td>Insert at cursor</td></tr>
+        <tr><td>a</td><td>Append after cursor</td></tr>
+        <tr><td>o</td><td>Open new line below</td></tr>
+        <tr><td>[Esc]</td><td>Exit insert mode</td></tr>
+        </tbody>
+    </table>
+
+    <h2>Delete Commands</h2>
+    <table>
+        <thead><tr><th>Command</th><th>Description</th></tr></thead>
+        <tbody>
+        <tr><td>x</td><td>Delete 1 character</td></tr>
+        <tr><td>5x</td><td>Delete 5 characters</td></tr>
+        <tr><td>dd</td><td>Delete current line</td></tr>
+        <tr><td>3dd</td><td>Delete 3 lines</td></tr>
+        <tr><td>D</td><td>Delete to end of line</td></tr>
+        <tr><td>J</td><td>Join with next line</td></tr>
+        <tr><td>i[Enter][Esc]</td><td>Insert line break</td></tr>
+        </tbody>
+    </table>
+
+    <h2>Change Commands</h2>
+    <table>
+        <thead><tr><th>Command</th><th>Example</th><th>Description</th></tr></thead>
+        <tbody>
+        <tr><td>r</td><td>ra</td><td>Replace 1 character with 'a'</td></tr>
+        <tr><td>3r</td><td>3ra[esc]</td><td>Replace 3 characters with 'aaa'</td></tr>
+        <tr><td>cw</td><td>cwabc[esc]</td><td>Change 1 word to 'abc'</td></tr>
+        <tr><td>3cw</td><td>3cwabc[esc]</td><td>Change 3 words to 'abc'</td></tr>
+        <tr><td>cwab cd 12[esc]</td><td>-</td><td>Change current word to 'ab cd 12'</td></tr>
+        <tr><td>3cwab cd 12[esc]</td><td>-</td><td>Change 3 words to 'ab cd 12'</td></tr>
+        </tbody>
+    </table>
+
+    <h2>Undo / Redo</h2>
+    <table>
+        <thead><tr><th>Key</th><th>Description</th></tr></thead>
+        <tbody>
+        <tr><td>u</td><td>Undo last change</td></tr>
+        <tr><td>uu</td><td>Undo the undo</td></tr>
+        <tr><td>.</td><td>Repeat last change</td></tr>
+        </tbody>
+    </table>
+    <h3>Example Flow</h3>
+    <pre>/abc
+cwABCD[esc]
+n.
+n.</pre>
+
+    <h2>Copy and Move</h2>
+    <table>
+        <thead><tr><th>Command</th><th>Action</th></tr></thead>
+        <tbody>
+        <tr><td>yy</td><td>Copy 1 line</td></tr>
+        <tr><td>3yy</td><td>Copy 3 lines</td></tr>
+        <tr><td>dd</td><td>Cut 1 line</td></tr>
+        <tr><td>3dd</td><td>Cut 3 lines</td></tr>
+        <tr><td>p</td><td>Paste below</td></tr>
+        </tbody>
+    </table>
+
+    <h2>Running Commands</h2>
+    <table>
+        <thead><tr><th>Command</th><th>Function</th></tr></thead>
+        <tbody>
+        <tr><td>:%s/abc/ABCD/g</td><td>Replace all 'abc' with 'ABCD'</td></tr>
+        <tr><td>:10,$ s/abc/ABCD/g</td><td>Replace 'abc' from line 10 to end</td></tr>
+        <tr><td>:0,$ s/^M//g</td><td>Remove all ^M characters (Ctrl+V Ctrl+M)</td></tr>
+        <tr><td>:100,200 w! filename</td><td>Write lines 100 to 200 to filename</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<footer>
+    <p>&copy; 2025 Unix System | 20101197 Kwon Hyun Uk</p>
+</footer>
+</body>
+</html>
