@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter06 - Shell Command & Redirection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0 0 120px 0;
+            color: #333;
+        }
+
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #2c3e50;
+            margin-top: 40px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background-color: #ecf0f1;
+        }
+
+        pre {
+            background-color: #f0f0f0;
+            padding: 10px;
+            overflow-x: auto;
+        }
+
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
+</head>
+
+<body>
+<header>
+    <h1>Chapter 06</h1>
+    <p>Shell Command & I/O Redirection</p>
+</header>
+
+<div class="container">
+    <h2>Anatomy of a Command</h2>
+    <pre>Command [options] [arguments]</pre>
+    <pre>ls -sCF /usr/bin
+ls -s -C -F /etc</pre>
+
+    <h2>Related Commands</h2>
+    <table>
+        <thead><tr><th>Command</th><th>Description</th></tr></thead>
+        <tbody>
+        <tr><td>man</td><td>Show manual page for a command</td></tr>
+        <tr><td>apropos</td><td>Search commands by keyword</td></tr>
+        <tr><td>whereis</td><td>Show location of binary, source, and manual</td></tr>
+        <tr><td>which</td><td>Show path of executable command</td></tr>
+        </tbody>
+    </table>
+
+    <h2>Meta Characters - Wildcards</h2>
+    <table>
+        <thead><tr><th>Symbol</th><th>Meaning</th><th>Example</th></tr></thead>
+        <tbody>
+        <tr><td>?</td><td>Matches any one character</td><td>ls hi?.txt → hi1.txt</td></tr>
+        <tr><td>*</td><td>Matches zero or more characters</td><td>ls *.txt → hi.txt, doc.txt</td></tr>
+        <tr><td>[]</td><td>Matches one character inside brackets</td><td>ls hi[12357].txt → hi1.txt, hi3.txt</td></tr>
+        </tbody>
+    </table>
+    <pre>
+ls *.txt
+ls hi?.txt
+ls hi[12357].txt</pre>
+
+    <h2>Redirection Summary</h2>
+    <table>
+        <thead><tr><th>Command</th><th>Description</th></tr></thead>
+        <tbody>
+        <tr><td>ls > ls.txt</td><td>Redirect stdout to file</td></tr>
+        <tr><td>sort < /etc/group</td><td>Use file as stdin</td></tr>
+        <tr><td>sort < /etc/group > sort.txt</td><td>Redirect input and output</td></tr>
+        <tr><td>mkdir dir1 2> err.txt</td><td>Redirect error to file</td></tr>
+        <tr><td>find / -name 'hi.txt' 2> /dev/null</td><td>Suppress error output</td></tr>
+        <tr><td>find /export/home -name 'hi.txt' > out.txt 2>&1</td><td>Redirect both stdout and stderr</td></tr>
+        <tr><td>find /export/home -name 'hi.txt' 2> out.txt 1>&2</td><td>Redirect in reverse order</td></tr>
+        </tbody>
+    </table>
+
+    <h2>Redirection Operators</h2>
+    <table>
+        <thead><tr><th>Operator</th><th>Meaning</th></tr></thead>
+        <tbody>
+        <tr><td>&gt; or 1&gt;</td><td>Redirect stdout</td></tr>
+        <tr><td>2&gt;</td><td>Redirect stderr</td></tr>
+        <tr><td>2&gt;&1</td><td>Redirect stderr to stdout</td></tr>
+        <tr><td>1&gt;&2</td><td>Redirect stdout to stderr</td></tr>
+        </tbody>
+    </table>
+
+    <h2>File Descriptors</h2>
+    <table>
+        <thead><tr><th>Symbol</th><th>Refers to</th></tr></thead>
+        <tbody>
+        <tr><td>&1</td><td>Standard output</td></tr>
+        <tr><td>&2</td><td>Standard error</td></tr>
+        </tbody>
+    </table>
+
+    <h2>Pipes & Variables</h2>
+    <pre>
+who | wc
+cat /etc/passwd | grep unix30</pre>
+
+    <h2>Variable usage</h2>
+
+    <pre>
+echo $PATH            # Prints the value of the PATH variable
+echo ${PATH}${TERM}   # Prints two variables together, braces avoid ambiguity
+echo "$PATH"          # Interprets the variable with spacing preserved
+echo '$PATH'          # Treated as a literal string, variable is not interpreted
+echo "WH$PATH"        # Combines literal text and a variable
+echo today is `date`  # Command substitution</pre>
+
+    <h2>Disk Quota Setup</h2>
+    <h3>1. Enable in /etc/vfstab</h3>
+    <pre>/dev/dsk/c0t0d0s7  /export/home  ufs  rw,usrquota,grpquota  1  2</pre>
+
+    <h3>2. Check and Create Quota Files</h3>
+    <pre>quotacheck -acug /export/home</pre>
+
+    <h3>3. Create Quota File</h3>
+    <pre>
+cd /export/home
+touch quotas
+chmod 600 quotas # only read and write</pre>
+
+    <h3>4. Set Quotas for User</h3>
+    <pre>edquota user-id</pre>
+    <p>Use <code>edquota</code> to edit the quota limits for a specific user. A text editor will open with the format below:</p>
+    <pre>
+fs /export/home blocks (soft = 10000, hard = 12000) inodes (soft = 1000, hard = 1200)
+    </pre>
+    <ul>
+        <li><strong>Soft limit</strong>: A warning threshold; users can exceed it temporarily.</li>
+        <li><strong>Hard limit</strong>: The absolute maximum limit for disk usage; cannot be exceeded.</li>
+        <li><strong>Inode limit</strong>: Limits the number of files/directories, not their size.</li>
+    </ul>
+</div>
+
+<footer>
+    <p>&copy; 2025 Unix System | 20101197 Kwon Hyun Uk</p>
+</footer>
+</body>
+</html>

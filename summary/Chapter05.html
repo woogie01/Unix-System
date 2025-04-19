@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter05 - Environment</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0 0 120px 0;
+            color: #333;
+        }
+
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #2c3e50;
+            margin-top: 40px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background-color: #ecf0f1;
+        }
+
+        pre {
+            background-color: #f0f0f0;
+            padding: 10px;
+            overflow-x: auto;
+        }
+
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
+</head>
+
+<body>
+<header>
+    <h1>Chapter 05</h1>
+    <p>Customizing Working Environment</p>
+</header>
+
+<div class="container">
+    <h2>Environment Variable</h2>
+    <p>Environment variables affect the shell environment and how it behaves.</p>
+
+    <h2>PS1 : Command Prompt Format</h2>
+    <table>
+        <thead><tr><th>Example</th><th>Description</th></tr></thead>
+        <tbody>
+        <tr><td><code>PS1='[hello >> '</code></td><td>Static prompt (sh shell)</td></tr>
+        <tr><td><code>PS1="[\u@\h \w] \$ "</code></td><td>Shows user, host, current dir (bash shell)</td></tr>
+        </tbody>
+    </table>
+
+    <h2>PATH</h2>
+    <p>Directory list that specifies where the system finds the command's executable file.</p>
+    <table>
+        <thead><tr><th>Command</th><th>Description</th></tr></thead>
+        <tbody>
+        <tr><td><code>PATH=/usr/bin:/usr/ucb</code></td><td>Set PATH to given directories</td></tr>
+        <tr><td><code>PATH=$PATH:/usr/sbin</code></td><td>Append /usr/sbin to PATH</td></tr>
+        </tbody>
+    </table>
+
+    <h2>Local vs Environment Variable</h2>
+    <table>
+        <thead><tr><th>Type</th><th>Description</th><th>Command</th></tr></thead>
+        <tbody>
+        <tr><td>Local</td><td>Affects only current shell</td><td><code>a=3</code></td></tr>
+        <tr><td>Environment</td><td>Affects subshells too</td><td><code>export a</code></td></tr>
+        </tbody>
+    </table>
+    <pre>$ a=3; b=5
+$ echo $a $b
+$ export b
+$ sh
+$ echo $a
+$ echo $b
+$ exit</pre>
+
+    <h2>Variable Commands</h2>
+    <table>
+        <thead><tr><th>Command</th><th>Purpose</th></tr></thead>
+        <tbody>
+        <tr><td><code>set</code></td><td>Show all variables</td></tr>
+        <tr><td><code>env</code></td><td>Show environment variables</td></tr>
+        <tr><td><code>echo $var</code></td><td>Print variable value</td></tr>
+        <tr><td><code>export var</code></td><td>Export variable</td></tr>
+        <tr><td><code>unset var</code></td><td>Remove variable</td></tr>
+        </tbody>
+    </table>
+
+    <h2>System vs User Variable</h2>
+    <table>
+        <thead><tr><th>Type</th><th>Description</th><th>Example</th></tr></thead>
+        <tbody>
+        <tr><td>System</td><td>Provided by system</td><td><code>$ echo $PATH</code><br><code>$ echo $SHELL</code></td></tr>
+        <tr><td>User</td><td>User-defined</td><td><code>a=3</code><br><code>echo $a</code></td></tr>
+        </tbody>
+    </table>
+
+    <h2>Absolute vs Relative Path</h2>
+    <table>
+        <thead><tr><th>Type</th><th>Description</th><th>Example</th></tr></thead>
+        <tbody>
+        <tr><td>Absolute</td><td>Starts with / (root)</td><td><code>/usr/bin/ls</code></td></tr>
+        <tr><td>Relative</td><td>Relative to current directory</td><td><code>dir1/hi.txt</code></td></tr>
+        <tr><td>Shorthand</td><td>Symbols</td><td><code>./.profile</code><br><code>../dir2/hi.txt</code><br><code>~unix300/hi.txt</code></td></tr>
+        </tbody>
+    </table>
+
+    <h2>Kinds of Shell</h2>
+    <table>
+        <thead><tr><th>Shell</th><th>Description</th></tr></thead>
+        <tbody>
+        <tr><td>Bourne (sh)</td><td>Original Unix shell</td></tr>
+        <tr><td>C shell (csh)</td><td>Syntax like C language</td></tr>
+        <tr><td>Korn shell (ksh)</td><td>Mix of sh & csh + scripting</td></tr>
+        <tr><td>Bash</td><td>Default in Linux, powerful</td></tr>
+        </tbody>
+    </table>
+
+    <h2>Shell Initialization Files</h2>
+    <table>
+        <thead><tr><th>Shell</th><th>Files</th></tr></thead>
+        <tbody>
+        <tr><td>Global</td><td>/etc/profile</td></tr>
+        <tr><td>sh</td><td>~/.profile</td></tr>
+        <tr><td>csh</td><td>~/.cshrc, ~/.login</td></tr>
+        <tr><td>ksh</td><td>~/.profile, ~/.kshrc</td></tr>
+        <tr><td>bash</td><td>~/.bashrc, ~/.bash_profile</td></tr>
+        </tbody>
+    </table>
+
+    <h2>alias</h2>
+    <table>
+        <thead><tr><th>Command</th><th>Description</th></tr></thead>
+        <tbody>
+        <tr><td><code>alias</code></td><td>View current aliases</td></tr>
+        <tr><td><code>alias ls='ls -l'</code></td><td>Create alias</td></tr>
+        <tr><td><code>unalias ls</code></td><td>Remove alias</td></tr>
+        <tr><td><code>dir() ls -l $*</code><br><code>dir /</code></td><td>Function-style alias in sh</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<footer>
+    <p>&copy; 2025 Unix System | 20101197 Kwon Hyun Uk</p>
+</footer>
+</body>
+</html>
